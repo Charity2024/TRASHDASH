@@ -183,6 +183,12 @@
         <div class="item" draggable="true" data-type="compost">Apple Core</div>
         <div class="item" draggable="true" data-type="recycle">Cardboard</div>
         <div class="item" draggable="true" data-type="trash">Plastic Wrapper</div>
+        <div class="item" draggable="true" data-type="compost">Banana Peel</div>
+        <div class="item" draggable="true" data-type="trash">Old Shoes</div>
+        <div class="item" draggable="true" data-type="recycle">Aluminum Can</div>
+        <div class="item" draggable="true" data-type="trash">Broken Glass</div>
+        <div class="item" draggable="true" data-type="compost">Coffee Grounds</div>
+        <div class="item" draggable="true" data-type="recycle">Newspaper</div>
     </div>
 
     <div class="bins">
@@ -240,6 +246,7 @@
             score -= 5;
             scoreElement.textContent = score;
         }
+        event.target.classList.remove('bin-over'); // Remove hover effect after drop
     }
 
     function dragLeave(event) {
@@ -250,6 +257,7 @@
         score = 0;
         scoreElement.textContent = score;
         document.querySelectorAll('.correct').forEach(bin => bin.classList.remove('correct'));
+        // Optionally reset item positions (not implemented in this version)
     });
 </script>
 
