@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste Sorting Game</title>
+    <link rel="stylesheet" href="./<public/css/mystyle.css">
+    <style>
+        /* Body and Background */
+        body {
+            font-family: cursive;
+            background: linear-gradient(to bottom right, #a0e8af, #e0f7fa);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #19541b;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1rem;
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ffd700;
+        }
+
+        /* Game Container */
+        .game-container {
+            text-align: center;
+            padding: 30px;
+            animation: slideIn 1s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .game-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .item {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: grab;
+            user-select: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+            font-size: 1.2rem;
+        }
+
+        .item:active {
+            cursor: grabbing;
+            transform: scale(0.95);
+        }
+
+        .bins {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .bin {
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            width: 30%;
+            text-align: center;
+            font-size: 1.5rem;
+            transition: background-color 0.3s;
+        }
+
+        .bin.correct {
+            background-color: #a5d6a7;
+        }
+
+        .bin.wrong {
+            background-color: #ef9a9a;
+        }
+
+        /* Score Display */
+        .score {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Progress bar */
+        .progress-container {
+            margin: 30px auto;
+            width: 80%;
+            background-color: #ddd;
+            border-radius: 20px;
+            height: 30px;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0%;
+            background-color: #4caf50;
+            border-radius: 20px;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+            font-size: 1rem;
+            transition: width 0.5s;
+        }
+
+        /* Reset Button */
+        #reset-game {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        #reset-game:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            background-color: #4caf50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Become a Waste Sorting Pro! 🌍</h1>
+        <nav>
+            <ul>
+                <li><a href="homepage.html">Home</a></li>
+                <li><a href="modules.html">Learning Modules</a></li>
+                <li><a href="footprint-tracker.html">Footprint Tracker</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="game-container">
+        <h2>Drag and Drop the Waste into the Right Bin!</h2>
+        <p>Can you sort all the items correctly? You’ll earn points for every correct answer! 🏅</p>
+        <div class="game-area">
+            <div class="item" draggable="true" data-type="recycle">Plastic Bottle</div>
+            <div class="item" draggable="true" data-type="compost">Apple Core</div>
+            <div class="item" draggable="true" data-type="recycle">Cardboard</div>
+            <div class="item" draggable="true" data-type="trash">Plastic Wrapper</div>
+        </div>
+
+        <div class="bins">
+            <div class="bin" data-type="recycle">♻ Recycle Bin</div>
+            <div class="bin" data-type="compost">🌱 Compost Bin</div>
+            <div class="bin" data-type="trash">🗑 Trash Bin</div>
+        </div>
+
+        <div class="score">
+            <h3>Your Score: <span id="score">0</span></h3>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress" id="progress">0%</div>
+        </div>
+
+        <button id="reset-game">Reset Game</button>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Waste Warriors Initiative 🌱 - Learn, Play, and Save the Planet!</p>
+    </footer>
+
+    <script src="gameLogic.js"></script>
+</body>
+
+</html>
